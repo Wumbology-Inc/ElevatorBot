@@ -1,0 +1,12 @@
+# No sharing secret passwords...
+credentials.JSON
+
+# Caches
+.vscode/
+__pycache__/
+
+# Virtual Envs
+.venv/
+
+# Logs
+*.log
