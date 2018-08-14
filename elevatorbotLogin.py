@@ -19,11 +19,15 @@ logging.basicConfig(filename='./log/elevatorbot.log', filemode='a', level=loggin
 class ElevatorBotClient(commands.Bot):
     def __init__(self, *args, **kwargs):
         super(ElevatorBotClient, self).__init__(*args, **kwargs)
+        self.elevatorchannelID = 465186905013616650
 
     async def on_ready(self):
         self.launch_time = datetime.utcnow()
         logging.info(f'Logged in as {self.user}')
         print(f'Logged in as {self.user}')  # Keep print statement for dev debugging
+
+        elevatorchannel = self.get_channel(self.elevatorchannelID)
+        self.VC = await elevatorchannel.connect()
 
 def loadCredentials(credentialJSON):
     """
@@ -37,10 +41,11 @@ def loadCredentials(credentialJSON):
 credentialpath = './credentials.JSON'
 credentials = loadCredentials(credentialpath)
 if credentials:
-    client = ElevatorBotClient(command_prefix='~')
+    client = ElevatorBotClient(command_prefix='$')
     
     # Load cogs
     client.load_extension("cogs.bot")
+    client.load_extension("cogs.yt")
 
     # Finally, try to log in
     client.run(credentials['TOKEN'])
