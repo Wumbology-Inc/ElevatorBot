@@ -1,0 +1,2 @@
+# Ignore existing logs
+*/*.log
