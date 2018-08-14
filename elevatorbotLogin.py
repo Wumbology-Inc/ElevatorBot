@@ -26,9 +26,6 @@ class ElevatorBotClient(commands.Bot):
         logging.info(f'Logged in as {self.user}')
         print(f'Logged in as {self.user}')  # Keep print statement for dev debugging
 
-        elevatorchannel = self.get_channel(self.elevatorchannelID)
-        self.VC = await elevatorchannel.connect()
-
 def loadCredentials(credentialJSON):
     """
     Load login credentials from the input JSON file
@@ -45,7 +42,7 @@ if credentials:
     
     # Load cogs
     client.load_extension("cogs.bot")
-    client.load_extension("cogs.yt")
+    client.load_extension("cogs.localmusic")
 
     # Finally, try to log in
     client.run(credentials['TOKEN'])
