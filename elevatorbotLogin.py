@@ -3,6 +3,7 @@ import logging
 import time
 from datetime import datetime
 
+import discord
 from discord.ext import commands
 
 
@@ -16,6 +17,11 @@ dateformat = '%Y-%m-%d %H:%M:%S'
 logging.basicConfig(filename='./log/elevatorbot.log', filemode='a', level=logging.INFO, 
                     format=logformat, datefmt=dateformat
                     )
+
+if not discord.opus.is_loaded():
+    # Load opus if it wasn't found automatically
+    discord.opus.load_opus('/usr/lib/libopus.so.0')
+
 class ElevatorBotClient(commands.Bot):
     def __init__(self, *args, **kwargs):
         super(ElevatorBotClient, self).__init__(*args, **kwargs)

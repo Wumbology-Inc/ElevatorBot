@@ -9,6 +9,7 @@ from discord.ext import commands
 class LocalMusic():
     def __init__(self, bot):
         self.bot = bot
+        # TODO: Use a directory of any number of files
         self.musicpath = Path('./music/elevator1.m4a')
 
     async def on_ready(self):
@@ -19,11 +20,12 @@ class LocalMusic():
         self.player = discord.FFmpegPCMAudio(self.musicpath)
         # Only start player if other users are in the voice channel
         if len(self._VCchannel.members) > 1:
-            self.play(self.player)
+            self.play()
 
         # TODO: Generate embed loop
 
     def play(self):
+        # TODO: Loop audio when done
         if not self.VC.is_playing():
             if not self.VC.is_paused():
                 self.VC.play(self.player)
