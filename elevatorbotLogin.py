@@ -1,8 +1,9 @@
 import json
 import logging
 import time
+from datetime import datetime
 
-from elevatorbot import ElevatorbotClient
+from discord.ext import commands
 
 
 # Force UTC Timestamps
@@ -15,8 +16,14 @@ dateformat = '%Y-%m-%d %H:%M:%S'
 logging.basicConfig(filename='./log/elevatorbot.log', filemode='a', level=logging.INFO, 
                     format=logformat, datefmt=dateformat
                     )
+class ElevatorBotClient(commands.Bot):
+    def __init__(self, *args, **kwargs):
+        super(ElevatorBotClient, self).__init__(*args, **kwargs)
 
-client = WumbotClient(command_prefix='&')
+    async def on_ready(self):
+        self.launch_time = datetime.utcnow()
+        logging.info(f'Logged in as {self.user}')
+        print(f'Logged in as {self.user}')  # Keep print statement for dev debugging
 
 def loadCredentials(credentialJSON):
     """
@@ -30,6 +37,13 @@ def loadCredentials(credentialJSON):
 credentialpath = './credentials.JSON'
 credentials = loadCredentials(credentialpath)
 if credentials:
+    client = ElevatorBotClient(command_prefix='~')
+    
+    # Load cogs
+    client.load_extension("cogs.bot")
+
+    # Finally, try to log in
     client.run(credentials['TOKEN'])
 else:
     logging.info(f"Credential file empty: {credentialpath}")
+    raise EnvironmentError

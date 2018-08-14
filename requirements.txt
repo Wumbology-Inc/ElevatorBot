@@ -1,4 +1,4 @@
 GitPython >= 2.1
 
 # Discord.py Rewrite Branch
-git+https://github.com/Rapptz/discord.py@rewrite#egg=discord.py
+git+https://github.com/Rapptz/discord.py@rewrite#egg=discord.py[voice]
